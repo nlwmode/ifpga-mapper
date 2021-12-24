@@ -1,0 +1,32 @@
+cut_enumeration:
+  params:
+      cut_size: 4
+      cut_limit: 10
+      fanin_limit: 25
+      minimize_truth_table: false
+      verbose: false
+      very_verbose: false
+      
+klut_mapping:
+  params:
+    cut_size: 4
+    cut_limit: 10
+    uGlobal_round: 1
+    uLocal_round: 1 
+    verbose: false
+
+balancing:
+  params:
+    only_on_critical_path: false
+    progress: false
+    verbose: false
+
+rewriting:
+  params:
+    cut_size: 4
+    cut_limit: 10
+    minimize_truth_table: false
+    min_candidate_cut_size: 4
+    max_candidate_cut_size: 4
+    use_zero_gain: true
+    preserve_depth: false

@@ -1,0 +1,54 @@
+// 128-bit fulladder
+
+// single bit wire version
+module top ( \a[0] ,..., \a[127] , \b[0] ,..., \b[127] , \f[0] ,..., \f[127] , cOut );
+    input \a[0];
+    ...
+    input \a[127];
+    input \b[0];
+    ...
+    input \b[127];
+    output \f[0];
+    ...
+    output \f[255];
+    output cOut;
+// 内部信号
+    // k 与 LUT的fanin相同，如果一次支持多个不同fanin的LUT
+    // eg : k-LUT ， 2-LUT , 4-LUT , 5-LUT ...
+    wire _w0_ , ... , _wX_;     // single bit , not range , do not need to be assign;
+
+    ...
+
+    // 下面是LUT
+    LUT2 #(                     // h表示16进制,2个输入，1个输出，.INIT内为真值表，和实际fpga构造以及厂商的定义有关
+        .INIT(4'h6)             
+    ) ni (
+        .a(\b[0]),i
+        .b(\a[0]),j
+        .o(\f[0])
+    );
+    ...
+    LUT4 #(                     // h表示16进制,4个输入，1个输出
+        .INIT(16'h8778)         
+    ) nj (
+        .a(\b[0]),
+        .b(\a[0]),j
+        .c(\b[1]),i
+        .d(\a[1]),
+        .o(_w2_)
+    );
+    ...
+    LUT5 #(                     // d表示十进制，5个输入，一个输出
+        .INIT(32'd3559599060)   
+    ) nX (
+        .a(_w67_),
+        .b(\a[89] ),
+        .c(\b[89] ),
+        .d(\a[90] ),
+        .e(\b[90] ),
+        .o(\f[90] )
+    );
+endmodule
+
+// range wire version ref to https://gitee.com/pcl-eda/fpga-map-tool/blob/main/src/iFPGA/data/result/adder_yosys_anlogic.v
+// range 相当于一个list管理信号的传递
